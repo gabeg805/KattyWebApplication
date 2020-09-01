@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block head %}
+	{{ super() }}
+	<link href= "{{ url_for('static',filename='css/livestream.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block title %}Katty - Live Stream{% endblock %}
+{% block content %}
+<div class="container">
+	<iframe id="cat-stream" src="http://192.168.0.121:8084" marginwidth="0" marginheight="0"></iframe>
+</div>
+{% endblock %}

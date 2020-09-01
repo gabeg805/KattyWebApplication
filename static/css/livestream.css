@@ -1,0 +1,17 @@
+.container
+{
+	height : 100%;
+	width : 100%;
+}
+
+#cat-stream
+{
+	border : 0;
+	display : block;
+	height : 90vh;
+	width : 90vw;
+	/*
+	height : 750px;
+	width  : 575px;
+	*/
+}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block head %}
+	{{ super() }}
+	<link href= "{{ url_for('static',filename='css/gallery.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block title %}Katty - Gallery{% endblock %}
+{% block content %}
+<div class="container">
+
+	{% for index, name, day in gallery %}
+		<div class="slideshow-viewport">
+
+			<div class="slideshow-container">
+				{% for j, image in day %}
+					<div class="slideshow-slides {{ "slideSet" ~ index }}">
+						<div class="slide-number">{{ j+1 }} / {{ day|length }}</div>
+						<div class="slide-time">{{ name ~ ", " ~ image[9:11] ~ ":" ~ image[11:13] }}</div>
+						<img src="{{ url_for('static', filename='img/' + image) }}">
+					</div>
+				{% endfor %}
+				<a class="slide-previous" onclick="previousSlide({{ index }})">&#10094;</a>
+				<a class="slide-next" onclick="nextSlide({{ index }})">&#10095;</a>
+			</div>
+
+			<div>
+				{% for j, image in day %}
+					<span class="dot {{ "dotSet" ~ index }}" onclick="selectSlide({{ index }}, {{ j }})"></span>
+				{% endfor %}
+			</div>
+
+		</div>
+	{% endfor %}
+
+</div>
+
+<script>
+	var currentSlideIndex = [0, 0, 0, 0, 0, 0, 0, 0];
+	setupSlideshow()
+
+	/**
+	 * @return Index of the current slide.
+	 */
+	function getCurrentSlide(id)
+	{
+		return currentSlideIndex[id];
+	}
+
+	/**
+	 * @return Number of images in slideshow.
+	 */
+	function getSlideshowLength(id)
+	{
+		var slides = document.getElementsByClassName("slideSet".concat(id));
+		return slides.length;
+	}
+
+	/**
+	 * Go to the next image in the slideshow.
+	 */
+	function nextSlide(id)
+	{
+		var num = getCurrentSlide(id) + 1;
+		selectSlide(id, num);
+	}
+
+	/**
+	 * Go to the previous image in the slideshow.
+	 */
+	function previousSlide(id)
+	{
+		var num = getCurrentSlide(id) - 1;
+		selectSlide(id, num);
+	}
+
+	/**
+	 * Set the index of the current image in the slideshow.
+	 */
+	function setCurrentSlide(id, num)
+	{
+		var length = getSlideshowLength(id);
+		var current = num;
+
+		if (num >= length)
+		{
+			current = 0;
+		}
+		else if (num < 0)
+		{
+			current = length-1;
+		}
+
+		currentSlideIndex[id] = current;
+	}
+
+	/**
+	 * Select the slide to show.
+	 */
+	function selectSlide(id, num)
+	{
+		setCurrentSlide(id, num);
+		showSlide(id);
+	}
+
+	/**
+	 * Setup the slideshow.
+	 */
+	function setupSlideshow()
+	{
+		for (var i=0; i < currentSlideIndex.length; i++)
+		{
+			showSlide(i);
+		}
+	}
+
+	/**
+	 * Show the current slide.
+	 */
+	function showSlide(id)
+	{
+		var slides = document.getElementsByClassName("slideSet".concat(id));
+		var dots = document.getElementsByClassName("dotSet".concat(id));
+		var num = getCurrentSlide(id);
+		var i;
+
+		for (i = 0; i < slides.length; i++)
+		{
+			slides[i].style.display = "none";
+		}
+
+		for (i = 0; i < dots.length; i++)
+		{
+			dots[i].className = dots[i].className.replace(" active", "");
+		}
+
+		slides[num].style.display = "inline-block";
+		dots[num].className += " active";
+	}
+</script>
+
+<!--<script src= "{{ url_for('static',filename='js/gallery.js') }}"></script>-->
+{% endblock %}

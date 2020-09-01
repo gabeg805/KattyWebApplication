@@ -1,0 +1,148 @@
+*
+{
+	box-sizing : border-box;
+}
+
+img
+{
+	display : inline-block;
+	margin : 0 auto;
+	max-height : 90vh;
+	max-width : 90vw;
+	object-fit : contain;
+	padding : 0;
+}
+
+.slideshow-viewport
+{
+	margin-bottom : 3em;
+	text-align : center;
+}
+
+/* Slideshow container */
+.slideshow-container
+{
+	display : inline-block;
+	margin-bottom : 1em;
+	position : relative;
+}
+
+/* Slideshow slides */
+.slideshow-slides
+{
+	display : inline-block;
+	position : relative;
+}
+
+/* Text on the image */
+.slide-number,
+.slide-time
+{
+	background : black;
+	color : #f2f2f2;
+	font-size : 0.85em;
+	padding : 8px 12px;
+	position : absolute;
+}
+
+.slide-number
+{
+	top : 0;
+	left : 0;
+}
+
+.slide-time
+{
+	bottom : 0;
+	right : 0;
+}
+
+/* Next & previous buttons */
+.slide-previous,
+.slide-next
+{
+	color : white;
+	cursor : pointer;
+	font-weight : bold;
+	font-size : 22px;
+	margin-top : -22px;
+	padding : 16px;
+	position : absolute;
+	text-decoration : none !important;
+	top : 50%;
+	transition : 0.6s ease;
+	user-select : none;
+	width : auto;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.slide-previous
+{
+	left : 0;
+	border-radius : 0 3px 3px 0;
+}
+
+.slide-next
+{
+	right : 0;
+	border-radius : 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.slide-previous:hover,
+.slide-next:hover
+{
+	background-color : rgba(0, 0, 0, 0.6);
+	color : white;
+}
+
+/* The dots/bullets/indicators */
+.dot
+{
+	cursor : pointer;
+	height : 12px;
+	width : 12px;
+	margin : 0 2px;
+	background-color : #bbbbbb;
+	border-radius : 50%;
+	display : inline-block;
+	transition : background-color 0.6s ease;
+}
+
+.active,
+.dot:hover
+{
+	background-color : #4a4a4a;
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px)
+{
+	.slide-previous,
+	.slide-next
+	{
+		font-size : 11px;
+	}
+}
+
+/* Fading animation */
+.fade {
+	-webkit-animation-name : fade;
+	-webkit-animation-duration : 1.5s;
+	animation-name : fade;
+	animation-duration : 1.5s;
+}
+
+@-webkit-keyframes fade {
+	from { opacity : 0.4 }
+	to { opacity : 1 }
+}
+
+@keyframes fade {
+	from { opacity : 0.4 }
+	to { opacity : 1}
+}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block head %}
+	{{ super() }}
+	<link href= "{{ url_for('static',filename='css/controller.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block title %}Katty - Feeder Control{% endblock %}
+{% block content %}
+<div class="container">
+	<a class="control-button" href="{{ url_for('feeder_ccw') }}"><button type="button">CCW</button></a>
+	<a class="control-button" href="{{ url_for('feeder_skip') }}"><button type="button">Skip</button></a>
+	<a class="control-button" href="{{ url_for('feeder_unskip') }}"><button type="button">Unskip</button></a>
+	<a class="control-button" href="{{ url_for('feeder_cw') }}"><button type="button">CW</button></a>
+</div>
+{% endblock %}
