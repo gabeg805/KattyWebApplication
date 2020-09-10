@@ -28,7 +28,10 @@ def create_navbar():
 
 	homeView = View('Home', 'index')
 	liveStreamView = View('Live Stream', 'live_stream')
-	galleryView = View('Gallery', 'gallery')
+	feederGalleryView = View('Feeder', 'gallery_feeder')
+	motionTrackerGalleryView = View('Motion Tracker', 'gallery_motion_tracker')
+	galleryView = Subgroup('Gallery', feederGalleryView, motionTrackerGalleryView)
+	#galleryView = View('Gallery', 'gallery')
 	#aboutView = View('About', 'about')
 	return Navbar('Katty', homeView, liveStreamView, galleryView)
 	#return Navbar('Katty', homeView, liveStreamView, galleryView, aboutView)
@@ -47,28 +50,55 @@ def live_stream():
 	Live stream of my cat.
 	'''
 
-	return render_template('livestream.html')
+	ipaddr = '127.0.0.1'
+	with open('/tmp/ipaddr.tmp', 'r') as handle:
+		ipaddr = handle.read().strip()
+	return render_template('livestream.html', ipaddr=ipaddr)
 
-@app.route('/gallery')
-def gallery():
+@app.route('/gallery/feeder')
+def gallery_feeder():
 	'''
 	Gallery of recent times my cat has been fed.
 	'''
 
-	directory = os.path.join(app.static_folder, 'img')
+	directory = os.path.join(app.static_folder, 'pics/feeder')
 	now = datetime.now()
 	images = []
 
 	for delta in range(8):
-			date = now - timedelta(days=delta)
-			nameformat = '{0}*'.format(date.strftime('%Y%m%d_'))
-			filepath = os.path.join(directory, nameformat)
-			listing = [os.path.basename(f) for f in glob.glob(filepath)]
+		date = now - timedelta(days=delta)
+		nameformat = '{0}*'.format(date.strftime('%Y%m%d_'))
+		filepath = os.path.join(directory, nameformat)
+		listing = [os.path.basename(f) for f in glob.glob(filepath)]
 
-			listing.sort()
-			images.append((delta, date.strftime('%a, %b %-d'), list(enumerate(listing))))
+		listing.sort()
+		images.append((delta, date.strftime('%a, %b %-d'), list(enumerate(listing))))
 
-	return render_template('gallery.html', gallery=images)
+	return render_template('gallery_feeder.html', gallery=images)
+
+@app.route('/gallery/motiontracker')
+def gallery_motion_tracker():
+	'''
+	Gallery of motion tracker events.
+	'''
+
+	directory = os.path.join(app.static_folder, 'pics/motiontracker')
+	#now = datetime.now()
+	#images = []
+	filepath = '{0}/*'.format(directory)
+	images = [os.path.basename(f) for f in glob.glob(filepath)]
+	images.sort()
+
+	#for delta in range(8):
+	#	date = now - timedelta(days=delta)
+	#	nameformat = '{0}*'.format(date.strftime('%Y%m%d_'))
+	#	filepath = os.path.join(directory, nameformat)
+	#	listing = [os.path.basename(f) for f in glob.glob(filepath)]
+
+	#	listing.sort()
+	#	images.append((delta, date.strftime('%a, %b %-d'), list(enumerate(listing))))
+
+	return render_template('gallery_motiontracker.html', gallery=images)
 
 #@app.route('/about')
 #def about():
@@ -125,4 +155,5 @@ def feeder_unskip():
 	return '', 204
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', debug=False)
+	app.run()
+	#app.run(host='0.0.0.0', debug=False)

@@ -15,7 +15,7 @@
 					<div class="slideshow-slides {{ "slideSet" ~ index }}">
 						<div class="slide-number">{{ j+1 }} / {{ day|length }}</div>
 						<div class="slide-time">{{ name ~ ", " ~ image[9:11] ~ ":" ~ image[11:13] }}</div>
-						<img src="{{ url_for('static', filename='img/' + image) }}">
+						<img src="{{ url_for('static', filename='pics/feeder/' + image) }}">
 					</div>
 				{% endfor %}
 				<a class="slide-previous" onclick="previousSlide({{ index }})">&#10094;</a>

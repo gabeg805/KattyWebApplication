@@ -1,0 +1,17 @@
+.img-with-text
+{
+	display : inline-block;
+	margin : 0;
+	padding : 0;
+}
+
+img
+{
+	height : 432px;
+	width : 324px;
+}
+
+p
+{
+	text-align : justify;
+}
