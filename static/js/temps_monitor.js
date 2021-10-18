@@ -85,11 +85,52 @@ function build_plot_options(title, annotations)
 					size: 20,
 					weight: "bold"
 				}
+			},
+
+			tooltip: {
+				mode: "index",
+				intersect: "false",
+				callbacks: {
+					title: function(items) {
+						var chart = items[0].chart;
+						var timestamps = chart.config._config.data.labels;
+						var label = items[0].label;
+						var index = items[0].dataIndex;
+
+						// Find the date, since the current label will often just be the time
+						for (let i=index; i >= 0; i--)
+						{
+							// An array indicates a date label, whereas a string is a time label
+							if (timestamps[i].constructor == Array)
+							{
+								// The current label was actually a date all along
+								if (i == index)
+								{
+									label = timestamps[i][1];
+								}
+
+								// Display the date in front of the time
+								return timestamps[i][0] + "  @  " + label;
+							}
+						}
+
+						// Should never get here, but return the default label for safety
+						return label;
+					},
+
+					label: function(item) {
+						var value = item.formattedValue;
+
+						// Add the units to the temp, as well as some space
+						return "  " + value + " °C";
+					}
+				}
 			}
 		},
 
 		scales: {
 			x: {
+				//type: "time",
 				ticks: {
 					display: true,
 					includeBounds: true,
