@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block head %}
+	{{ super() }}
+	<link href="{{ url_for('static', filename='css/controller.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block title %}Katty - Feeder Control - CW{% endblock %}
+{% block content %}
+<div class="container">
+	<h2>Feeder spun clockwise!</h2>
+	<!--
+	<p class="important">
+		Welcome to the Katty web application. Here you can view a live stream of my cat, check out a gallery of images, and more.
+	</p>
+	-->
+</div>
+{% endblock %}

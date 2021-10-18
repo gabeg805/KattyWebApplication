@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block head %}
+	{{ super() }}
+	<link href="{{ url_for('static', filename='css/multistream.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block title %}Katty - Live Stream{% endblock %}
+{% block content %}
+<div class="container">
+	<iframe id="cat-stream" src="http://192.168.0.184:8084" marginwidth="0" marginheight="0"></iframe>
+	<iframe id="cat-stream" src="http://192.168.0.186:8086" marginwidth="0" marginheight="0"></iframe>
+	<iframe id="cat-stream" src="http://192.168.0.190:8090" marginwidth="0" marginheight="0"></iframe>
+	<iframe id="cat-stream" src="http://192.168.0.188:8088" marginwidth="0" marginheight="0"></iframe>
+
+	<!--
+	<iframe id="cat-stream" src="http://{{ ipaddr }}:8084" marginwidth="0" marginheight="0"></iframe>
+	<iframe id="cat-stream" src="http://{{ ipaddr }}:8088" marginwidth="0" marginheight="0"></iframe>
+	<iframe id="cat-stream" src="http://{{ ipaddr }}:8086" marginwidth="0" marginheight="0"></iframe>
+	<iframe id="cat-stream" src="http://{{ ipaddr }}:8090" marginwidth="0" marginheight="0"></iframe>
+	-->
+</div>
+{% endblock %}

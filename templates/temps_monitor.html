@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block head %}
+	{{ super() }}
+
+	<script src="{{ url_for('static', filename='js/temps_monitor.js') }}"></script>
+	<script src="{{ url_for('static', filename='chart.js/dist/chart.js') }}"></script>
+	<script src="{{ url_for('static', filename='chartjs-plugin-annotation/dist/chartjs-plugin-annotation.js') }}"></script>
+
+	<link href="{{ url_for('static', filename='css/temps_monitor.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block title %}Katty - Temp Monitor{% endblock %}
+{% block content %}
+<div class="container">
+
+	<!-- Timespans for the plots -->
+	<h3>Timespans</h3>
+
+	<div>
+		<a class="timespan-link" href="{{ url_for('temps_monitor', span='today') }}"><button class="timespan-button" type="button">Today</button></a>
+		<a class="timespan-link" href="{{ url_for('temps_monitor', span='1d') }}"><button class="timespan-button" type="button">1 Day</button></a>
+		<a class="timespan-link" href="{{ url_for('temps_monitor', span='2d') }}"><button class="timespan-button" type="button">2 Day</button></a>
+		<a class="timespan-link" href="{{ url_for('temps_monitor', span='3d') }}"><button class="timespan-button" type="button">3 Day</button></a>
+	</div>
+
+	<!-- Horizontal rule (line split) -->
+	<hr>
+
+	<!-- Plots -->
+	<h3>Plots</h3>
+
+	<!-- For each camera -->
+	{% for name, timestamps, temps, color in zip(allNames, allTimestamps, allTemps, allColors) %}
+
+		<!-- Create a plot -->
+		<canvas id="{{ name | safe }}_linechart" class="temp-plot"></canvas>
+		<br>
+		<br>
+		<br>
+
+		<!-- With all the temps for the given time range -->
+		<script>
+			var canvas = document.getElementById("{{ name | safe }}_linechart");
+			var ctx = canvas.getContext("2d");
+
+			// Set the canvas width and height
+			canvas.width = document.body.clientWidth;
+			canvas.height = document.body.clientHeight;
+
+			// Setup the data that is passed in with flask
+			var title = "{{ name | safe }}";
+			var color = "{{ color | safe }}";
+			var timestampsArray = {{ timestamps | safe }};
+			var tempsArray = {{ temps | safe }};
+
+			// Build the annotations that will be drawn on the plot
+			var annotationsArray = build_annotations(timestampsArray);
+
+			// Build the plot data
+			var data = build_plot_data(timestampsArray, tempsArray, color);
+
+			// Build the plot options
+			var options = build_plot_options(title, annotationsArray);
+
+			// Build the plot configuration
+			var config = {
+				type: "line",
+				data,
+				options
+			};
+
+			// Create the plot
+			var lineChart = new Chart(ctx, config);
+		</script>
+
+	{% endfor %}
+
+</div>
+{% endblock %}

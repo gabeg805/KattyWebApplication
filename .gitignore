@@ -1,3 +1,7 @@
-__pycache__
-pics
-log
+__pycache__/
+pics/
+log/
+
+static/calendar/
+static/chart.js/
+static/chartjs-plugin-annotation/

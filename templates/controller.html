@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
 	{{ super() }}
-	<link href= "{{ url_for('static',filename='css/controller.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ url_for('static', filename='css/controller.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block title %}Katty - Feeder Control{% endblock %}
 {% block content %}
